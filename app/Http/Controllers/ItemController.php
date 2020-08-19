@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -13,7 +14,13 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = Item::all();
+
+        return response()->json([
+            'message' => 'OK',
+            'data' => $items
+        ], 200, [], JSON_UNESCAPED_UNICODE);
+
     }
 
     /**
@@ -24,7 +31,12 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = Item::create($request->all());
+
+        return response()->json([
+            'message' => 'Created successfully.',
+            'data' => $item
+        ], 201, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -35,7 +47,18 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = Item::find($id);
+
+        if ($item) {
+            return response()->json([
+                'message' => 'OK',
+                'data' => $item
+            ], 200, [], JSON_UNESCAPED_UNICODE);
+        } else {
+            return response()->json([
+                'message' => 'Not found.',
+            ], 404);
+        }
     }
 
     /**
@@ -47,7 +70,24 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = [
+            'title' => $request->title,
+            'image' => $request->image,
+            'description' => $request->description,
+            'price' => $request->price,
+        ];
+
+        $item = Item::where('id', $id)->update($update);
+
+        if ($item) {
+            return response()->json([
+                'message' => 'Updated successfully.',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Not found.',
+            ], 404);
+        }
     }
 
     /**
@@ -58,6 +98,16 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Item::where('id', $id)->delete();
+
+        if ($item) {
+            return response()->json([
+                'message' => 'Deleted successfully.',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Not found.',
+            ], 404);
+        }
     }
 }
