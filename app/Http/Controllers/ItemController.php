@@ -43,7 +43,7 @@ class ItemController extends Controller
         $uploadImg = $item_model->image = $request->file('image');
         $path = Storage::disk('s3')->put('/', $uploadImg, 'public');
         $item_model->image = Storage::disk('s3')->url($path);
-        
+
         $item_model->save();
 
         return response()->json([
@@ -83,18 +83,26 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $item_model = new Item();
+
+        $uploadImg = $item_model->image = $request->file('image');
+        $path = Storage::disk('s3')->put('/', $uploadImg, 'public');
+        $item_model->image = Storage::disk('s3')->url($path);
+
         $update = [
             'title' => $request->title,
-            'image' => $request->image,
+            'image' => $item_model->image,
             'description' => $request->description,
             'price' => $request->price,
         ];
-
+        
         $item = Item::where('id', $id)->update($update);
 
         if ($item) {
             return response()->json([
                 'message' => 'Updated successfully.',
+                'data' => $update
             ], 200);
         } else {
             return response()->json([
