@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -31,11 +32,23 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $item = Item::create($request->all());
+        // $item = Item::create($request->all());
+
+        $item_model = new Item();
+
+        $item_model->title = $request->title;
+        $item_model->description = $request->description;
+        $item_model->price = $request->price;
+
+        $uploadImg = $item_model->image = $request->file('image');
+        $path = Storage::disk('s3')->put('/', $uploadImg, 'public');
+        $item_model->image = Storage::disk('s3')->url($path);
+        
+        $item_model->save();
 
         return response()->json([
             'message' => 'Created successfully.',
-            'data' => $item
+            'data' => $item_model
         ], 201, [], JSON_UNESCAPED_UNICODE);
     }
 
