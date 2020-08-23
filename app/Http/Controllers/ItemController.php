@@ -33,8 +33,6 @@ class ItemController extends Controller
      */
     public function store(ValidatedRequest $request)
     {
-        // $item = Item::create($request->all());
-
         $item_model = new Item();
 
         $item_model->title = $request->title;
@@ -88,7 +86,7 @@ class ItemController extends Controller
         $item_model = new Item();
 
         $uploadImg = $item_model->image = $request->file('image');
-        $path = Storage::disk('s3')->put('/', $uploadImg, 'public');
+        $path = Storage::disk('s3')->putFile('/', $uploadImg, 'public');
         $item_model->image = Storage::disk('s3')->url($path);
 
         $update = [
