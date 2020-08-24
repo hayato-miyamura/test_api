@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UserApiTest extends PassportTestCase {
 
     public function testGetApiUserWithTokenInHeaders() {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $this->get('/api/user', $this->headersWithToken)->assertStatus(200);
     }
 
