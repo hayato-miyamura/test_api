@@ -14,10 +14,22 @@
                     </div>
                     @endif
 
-                    <!-- {{ __('You are logged in!') }} -->
-                    <passport-clients></passport-clients>
-                    <passport-authorized-clients></passport-authorized-clients>
-                    <passport-personal-access-tokens></passport-personal-access-tokens>
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Your Info : </th>
+                                <td>{{ $users->name }}</td>
+                                <td>{{ $users->email }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

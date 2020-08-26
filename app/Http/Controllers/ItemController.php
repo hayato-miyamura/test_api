@@ -6,9 +6,17 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidatedRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
+
+    // Middleware/CheckAuthenticated.phpで認証済みかどうかチェック。
+    public function __construct()
+    {
+        $this->middleware('check.auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,12 +24,13 @@ class ItemController extends Controller
      */
     public function index()
     {
+
         $items = Item::all();
 
         return response()->json([
             'message' => 'OK',
             'data' => $items
-        ], 200, [], JSON_UNESCAPED_UNICODE);
+        ], 200, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
     }
 
@@ -40,7 +49,7 @@ class ItemController extends Controller
         $item_model->price = $request->price;
 
         $uploadImg = $item_model->image = $request->file('image');
-        $path = Storage::disk('s3')->put('/', $uploadImg, 'public');
+        $path = Storage::disk('s3')->putFile('/', $uploadImg, 'public');
         $item_model->image = Storage::disk('s3')->url($path);
 
         $item_model->save();
@@ -48,7 +57,7 @@ class ItemController extends Controller
         return response()->json([
             'message' => 'Created successfully.',
             'data' => $item_model
-        ], 201, [], JSON_UNESCAPED_UNICODE);
+        ], 201, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 
     /**
@@ -65,7 +74,7 @@ class ItemController extends Controller
             return response()->json([
                 'message' => 'OK',
                 'data' => $item
-            ], 200, [], JSON_UNESCAPED_UNICODE);
+            ], 200, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         } else {
             return response()->json([
                 'message' => 'Not found.',
