@@ -49,8 +49,8 @@ class ItemController extends Controller
         $item_model->price = $request->price;
 
         $uploadImg = $item_model->image = $request->file('image');
-        $path = Storage::disk('s3')->putFile('/', $uploadImg, 'public');
-        $item_model->image = Storage::disk('s3')->url($path);
+        $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
+        $item_model->image = Storage::disk(config('filesystems.cloud'))->url($path);
 
         $item_model->save();
 
@@ -95,8 +95,8 @@ class ItemController extends Controller
         $item_model = new Item();
 
         $uploadImg = $item_model->image = $request->file('image');
-        $path = Storage::disk('s3')->putFile('/', $uploadImg, 'public');
-        $item_model->image = Storage::disk('s3')->url($path);
+        $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
+        $item_model->image = Storage::disk(config('filesystems.cloud'))->url($path);
 
         $update = [
             'title' => $request->title,

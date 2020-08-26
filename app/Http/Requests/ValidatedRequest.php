@@ -25,10 +25,13 @@ class ValidatedRequest extends FormRequest
      */
     public function rules()
     {
+        $canInputTitle = config('const.title');
+        $canInputDescription = config('const.description');
+
         return [
-            'title' => 'required|string|max:100',
+            'title' => "required|string|max:{$canInputTitle}",
             'image' => 'required|image',
-            'description' => 'required|string|max:500',
+            'description' => "required|string|max:{$canInputDescription}",
             'price' => 'required|integer'
         ];
     }
