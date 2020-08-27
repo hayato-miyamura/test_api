@@ -57,7 +57,7 @@ class LoginController extends Controller
         $user = User::where('email', $googleUserInfo->email)->first();
 
         if ($user === null) {
-            $user = $this->createUserByGoogle($googleUserInfo);
+            $user = $this->createUserFromGoogle($googleUserInfo);
         }
 
         \Auth::login($user, true);
@@ -70,7 +70,7 @@ class LoginController extends Controller
         $user = User::create([
             'name'     => $googleUserInfo->name,
             'email'    => $googleUserInfo->email,
-            'password' => Hash::make(uniqid()),
+            'password' => \Hash::make(uniqid()),
         ]);
         return $user;
     }
