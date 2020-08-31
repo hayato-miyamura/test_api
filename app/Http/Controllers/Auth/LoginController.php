@@ -56,11 +56,12 @@ class LoginController extends Controller
         // emailで登録をしているか調べる
         $user = User::where('email', $googleUserInfo->email)->first();
 
-        if ($user === null) {
+        if (is_null($user)) {
             $user = $this->createUserFromGoogle($googleUserInfo);
         }
 
         \Auth::login($user, true);
+
         return redirect('/home');
     }
 
@@ -72,12 +73,14 @@ class LoginController extends Controller
             'email'    => $googleUserInfo->email,
             'password' => \Hash::make(uniqid()),
         ]);
+
         return $user;
     }
 
 
     // ログアウト時にログイン画面にリダイレクト。
     protected function loggedOut(Request $request) {
+
         return redirect('/login');
     }
 }

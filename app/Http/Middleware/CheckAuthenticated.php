@@ -17,7 +17,7 @@ class CheckAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
+        if (Auth::guest()) {
             return response()->json([
                 'message' => 'You must log in.',
             ], 401, [], JSON_UNESCAPED_UNICODE);
