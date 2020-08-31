@@ -25,8 +25,8 @@
                         <tbody>
                             <tr>
                                 <th scope="row">Your Info : </th>
-                                <td>{{ $users->name }}</td>
-                                <td>{{ $users->email }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
                             </tr>
                         </tbody>
                     </table>
