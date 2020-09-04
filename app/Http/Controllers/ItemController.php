@@ -12,9 +12,11 @@ class ItemController extends Controller
 {
 
     // Middleware/CheckAuthenticated.phpで認証済みかどうかチェック。
+    // Middleware/CookieCheck.phpでCookieを持ってない場合Login画面へリダイレクト。
     public function __construct()
     {
         $this->middleware('check.auth');
+        $this->middleware('cookie');
     }
 
     /**

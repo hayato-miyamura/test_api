@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,15 @@ class HomeController extends Controller
 
         $user = Auth::user();
 
-        return view('home', compact('user'));
+        $cookie = Cookie::get('name');
+        // Cookieの有効期間(1分)
+        $minutes = config('const.cookie_limit');
+
+        if (!isset($cookie)) {
+            return response()->view('home', compact('user'))->cookie('name', "$user->name", $minutes);
+        } else {
+            return view('home', compact('user'));
+        }
+
     }
 }
