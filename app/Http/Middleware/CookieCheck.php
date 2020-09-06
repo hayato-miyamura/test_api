@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+
 
 class CookieCheck
 {
@@ -20,6 +22,7 @@ class CookieCheck
 
         // nameキーがあるCookieがない場合ログイン画面へリダイレクト。ある場合通常通りAPIを使用可能。
         if(!isset($cookie)) {
+            Auth::logout();
             return redirect('/login');
         } else {
             return $next($request);
