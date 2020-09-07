@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
-
 class CookieCheck
 {
     /**
@@ -21,7 +20,7 @@ class CookieCheck
         $cookie = Cookie::get('name');
 
         // nameキーがあるCookieがない場合ログイン画面へリダイレクト。ある場合通常通りAPIを使用可能。
-        if(!isset($cookie)) {
+        if(empty($cookie)) {
             Auth::logout();
             return redirect('/login');
         } else {
