@@ -33,7 +33,7 @@ class HomeController extends Controller
         // Cookieの有効期間(1分)
         $minutes = config('const.cookie_limit');
 
-        if (!isset($cookie)) {
+        if (empty($cookie)) {
             return response()->view('home', compact('user'))->cookie('name', "$user->name", $minutes);
         } else {
             return view('home', compact('user'));

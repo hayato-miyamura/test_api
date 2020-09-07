@@ -23,8 +23,7 @@ class CookieCheck
         if(empty($cookie)) {
             Auth::logout();
             return redirect('/login');
-        } else {
-            return $next($request);
         }
+            return $next($request);
     }
 }
