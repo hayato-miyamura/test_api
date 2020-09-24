@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('login/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('login/google/callback', 'Auth\LoginController@googleCallback');
+
+// Route::apiResource('/items', 'ItemController');
+
+Route::post('/home', 'ItemController@store')->name('item.store');

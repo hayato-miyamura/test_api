@@ -6,6 +6,7 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidatedRequest;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
@@ -45,10 +46,20 @@ class ItemController extends Controller
     public function store(ValidatedRequest $request)
     {
         $item_model = new Item();
+        // $user_id = new User::find($id);
+        $user = Auth::user();
 
-        $item_model->title = $request->title;
-        $item_model->description = $request->description;
-        $item_model->price = $request->price;
+        // $item_model->user_id = $user->id;
+        // $item_model->title = $request->title;
+        // $item_model->description = $request->description;
+        // $item_model->price = $request->price;
+
+        $item_model->user_id = $user->id;
+        $item_model->title = $request->input('title');
+        $item_model->image = $request->input('image');
+        $item_model->description = $request->input('description');
+        $item_model->price = $request->input('price');
+
 
         $uploadImg = $item_model->image = $request->file('image');
         $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
@@ -56,10 +67,12 @@ class ItemController extends Controller
 
         $item_model->save();
 
-        return response()->json([
-            'message' => 'Created successfully.',
-            'data' => $item_model
-        ], 201, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        // return response()->json([
+        //     'message' => 'Created successfully.',
+        //     'data' => $item_model
+        // ], 201, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+        return redirect('/home');
     }
 
     /**
