@@ -54,13 +54,7 @@ class ItemController extends Controller
     public function store(ValidatedRequest $request)
     {
         $item_model = new Items();
-        // $user_id = new User::find($id);
         $user = Auth::user();
-
-        // $item_model->user_id = $user->id;
-        // $item_model->title = $request->title;
-        // $item_model->description = $request->description;
-        // $item_model->price = $request->price;
 
         $item_model->user_id = $user->id;
         $item_model->title = $request->input('title');
@@ -68,21 +62,13 @@ class ItemController extends Controller
         $item_model->description = $request->input('description');
         $item_model->price = $request->input('price');
 
-
         $uploadImg = $item_model->image = $request->file('image');
         $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
         $item_model->image = Storage::disk(config('filesystems.cloud'))->url($path);
 
         $item_model->save();
 
-        // return response()->json([
-        //     'message' => 'Created successfully.',
-        //     'data' => $item_model
-        // ], 201, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-
         return redirect('/item');
-
-        // dd($request);
     }
 
     /**
@@ -125,38 +111,14 @@ class ItemController extends Controller
         $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
         $item_model->image = Storage::disk(config('filesystems.cloud'))->url($path);
 
-        // $update = [
-        //     'title' => $request->title,
-        //     'image' => $item_model->image,
-        //     'description' => $request->description,
-        //     'price' => $request->price,
-        // ];
-
         $update = [
             'title' => $request->input('title'),
             'image' => $item_model->image,
             'description' => $request->input('description'),
             'price' => $request->input('price'),
         ];
-        
-        // $item = Items::where('id', $id)->update($update);
 
         Items::where('id', $id)->update($update);
-
-        dd($request);
-
-        // return redirect('/item');
-
-        // if ($item) {
-        //     return response()->json([
-        //         'message' => 'Updated successfully.',
-        //         'data' => $update
-        //     ], 200);
-        // } else {
-        //     return response()->json([
-        //         'message' => 'Not found.',
-        //     ], 404);
-        // }
     }
 
     /**

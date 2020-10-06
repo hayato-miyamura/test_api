@@ -98,10 +98,47 @@
 
             $('#id').val(data[0]);
             $('#title').val(data[1]);
-            // $('#image').val(data[2]);
             $('#description').val(data[3]);
             $('#price').val(data[4]);
         });
+
+        $('#addItem').on('submit', function(e) {
+            e.preventDefault();
+
+            var title = $('#add_title').val();
+            var image = $('#add_image').val();
+            var description = $('#add_description').val();
+            var price = $('#add_price').val();
+
+            const formData = new FormData($('#addItem').get(0));
+
+            formData.append('title', title);
+            formData.append('image', image);
+            formData.append('description', description);
+            formData.append('price', price);
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                type: "POST",
+                url: "/item",
+                data: formData,
+                // cache: false,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    $('#add_item_modal').modal('hide');
+                    alert("Data stored successfully");
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
 
         $('#editItem').on('submit', function(e) {
             e.preventDefault();
@@ -109,47 +146,11 @@
 
             var id = $('#id').val();
             var title = $('#title').val();
-            // var image = $('#image')[0].files[0].name;
-            // var image = document.getElementById('image');
             var image = $('#image').val();
             var description = $('#description').val();
             var price = $('#price').val();
 
             const formData = new FormData($('#editItem').get(0));
-
-            // var formData = new FormData();
-
-            // formData.append('title', title);
-            // formData.append('image', $('input[type=file]')[0].files[0]);
-            // formData.append('description', description);
-            // formData.append('price', price);
-
-            // const imageInput = document.getElementById('image');
-            // imageInput.addEventListener("change", handleFiles, false);
-
-            // function handleFiles() {
-
-            //     let formData = new FormData();
-            //     formData.append("image", imageInput.files[0]);
-
-            //     const xhr = new XMLHttpRequest();
-            //     xhr.open('PUT', '/item/' + id);
-            //     xhr.onload = () => {
-            //         console.log("Updated");
-            //     };
-            //     xhr.send(formData);
-
-            // }
-
-           
-            // var reader = new FileReader();
-
-            // reader.readAsDataURL(image);
-
-            // var $title = $('#title');
-            // var $image = $('#image');
-            // var $description = $('#description');
-            // var $price = $('#price');
 
             formData.append('title', title);
             formData.append('image', image);
@@ -163,12 +164,6 @@
                 type: "POST",
                 url: "/item/" + id,
                 data: formData,
-                // data: {
-                //     title: title,
-                //     image: formData,
-                //     description: description,
-                //     price: price,
-                // },
                 // cache: false,
                 contentType: false,
                 processData: false,

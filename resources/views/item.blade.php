@@ -26,20 +26,20 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="InputTitle">商品タイトル</label>
-                                            <input type="text" class="form-control" name="title" placeholder="商品名を入力してください">
+                                            <input type="text" class="form-control" name="title" id="add_title" placeholder="商品名を入力してください">
                                             <small id="" class="form-text text-muted">注意事項：</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="InputFile">商品画像</label>
-                                            <input type="file" name="image" class="form-control-file">
+                                            <input type="file" name="image" class="form-control-file" id="add_image">
                                         </div>
                                         <div class="form-group">
                                             <label for="InputDescription">商品の説明</label>
-                                            <textarea name="description" class="form-control" rows="3"></textarea>
+                                            <textarea name="description" class="form-control" rows="3" id="add_description"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="InputPrice">価格</label>
-                                            <input type="text" class="form-control" name="price" placeholder="価格を入力してください">
+                                            <input type="text" class="form-control" name="price" id="add_price" placeholder="価格を入力してください">
                                             <small id="" class="form-text text-muted">注意事項：</small>
                                         </div>
                                         <div class="">
