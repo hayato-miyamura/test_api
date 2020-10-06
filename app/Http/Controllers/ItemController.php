@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
+use App\Models\Items;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidatedRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ItemController extends Controller
 {
@@ -28,12 +29,19 @@ class ItemController extends Controller
     public function index()
     {
 
-        $items = Item::all();
+        // $items = Items::all();
 
-        return response()->json([
-            'message' => 'OK',
-            'data' => $items
-        ], 200, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        // return response()->json([
+        //     'message' => 'OK',
+        //     'data' => $items
+        // ], 200, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $items = Items::where('user_id', $user_id)->get();
+
+        return view('item', compact('items'));
 
     }
 
@@ -45,7 +53,7 @@ class ItemController extends Controller
      */
     public function store(ValidatedRequest $request)
     {
-        $item_model = new Item();
+        $item_model = new Items();
         // $user_id = new User::find($id);
         $user = Auth::user();
 
@@ -72,7 +80,9 @@ class ItemController extends Controller
         //     'data' => $item_model
         // ], 201, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
-        return redirect('/home');
+        return redirect('/item');
+
+        // dd($request);
     }
 
     /**
@@ -83,7 +93,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $item = Item::find($id);
+        $item = Items::find($id);
 
         if ($item) {
             return response()->json([
@@ -106,32 +116,47 @@ class ItemController extends Controller
      */
     public function update(ValidatedRequest $request, $id)
     {
+        \Log::debug('####');
+        \Log::debug($request);
 
-        $item_model = new Item();
+        $item_model = new Items();
 
         $uploadImg = $item_model->image = $request->file('image');
         $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
         $item_model->image = Storage::disk(config('filesystems.cloud'))->url($path);
 
+        // $update = [
+        //     'title' => $request->title,
+        //     'image' => $item_model->image,
+        //     'description' => $request->description,
+        //     'price' => $request->price,
+        // ];
+
         $update = [
-            'title' => $request->title,
+            'title' => $request->input('title'),
             'image' => $item_model->image,
-            'description' => $request->description,
-            'price' => $request->price,
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
         ];
         
-        $item = Item::where('id', $id)->update($update);
+        // $item = Items::where('id', $id)->update($update);
 
-        if ($item) {
-            return response()->json([
-                'message' => 'Updated successfully.',
-                'data' => $update
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Not found.',
-            ], 404);
-        }
+        Items::where('id', $id)->update($update);
+
+        dd($request);
+
+        // return redirect('/item');
+
+        // if ($item) {
+        //     return response()->json([
+        //         'message' => 'Updated successfully.',
+        //         'data' => $update
+        //     ], 200);
+        // } else {
+        //     return response()->json([
+        //         'message' => 'Not found.',
+        //     ], 404);
+        // }
     }
 
     /**
@@ -142,7 +167,7 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $item = Item::where('id', $id)->delete();
+        $item = Items::where('id', $id)->delete();
 
         if ($item) {
             return response()->json([

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class Items extends Model
 {
     protected $fillable =[
         'user_id',
@@ -13,4 +13,8 @@ class Item extends Model
         'description',
         'price'
     ];
+
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
 }

@@ -27,4 +27,6 @@ Route::get('login/google/callback', 'Auth\LoginController@googleCallback');
 
 // Route::apiResource('/items', 'ItemController');
 
-Route::post('/home', 'ItemController@store')->name('item.store');
+Route::get('/item', 'ItemController@index')->name('item.index');
+Route::post('/item', 'ItemController@store')->name('item.store');
+Route::put('/item/{id}', 'ItemController@update')->name('item.update');

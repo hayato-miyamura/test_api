@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use App\Models\Items;
 
 class HomeController extends Controller
 {
@@ -33,10 +34,12 @@ class HomeController extends Controller
         // Cookieの有効期間(1分)
         $minutes = config('const.cookie_limit');
 
+        $user_id = Items::find(15)->user->id;
+
         if (empty($cookie)) {
-            return response()->view('home', compact('user'))->cookie('name', "$user->name", $minutes);
+            return response()->view('home', compact('user', 'user_id'))->cookie('name', "$user->name", $minutes);
         } else {
-            return view('home', compact('user'));
+            return view('home', compact('user', 'user_id'));
         }
 
     }
