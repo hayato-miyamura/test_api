@@ -28,14 +28,6 @@ class ItemController extends Controller
      */
     public function index()
     {
-
-        // $items = Items::all();
-
-        // return response()->json([
-        //     'message' => 'OK',
-        //     'data' => $items
-        // ], 200, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-
         $user = Auth::user();
         $user_id = $user->id;
 
@@ -53,6 +45,9 @@ class ItemController extends Controller
      */
     public function store(ValidatedRequest $request)
     {
+        \Log::debug('####');
+        \Log::debug($request);
+
         $item_model = new Items();
         $user = Auth::user();
 
@@ -67,8 +62,6 @@ class ItemController extends Controller
         $item_model->image = Storage::disk(config('filesystems.cloud'))->url($path);
 
         $item_model->save();
-
-        return redirect('/item');
     }
 
     /**
@@ -127,18 +120,11 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $item = Items::where('id', $id)->delete();
+        \Log::debug('####');
+        \Log::debug($request);
 
-        if ($item) {
-            return response()->json([
-                'message' => 'Deleted successfully.',
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Not found.',
-            ], 404);
-        }
+        Items::where('id', $id)->delete();
     }
 }

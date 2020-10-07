@@ -85,6 +85,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
+        // 編集モーダルの表示
         $('.editbtn').on('click', function() {
             $('#edit_item_modal').modal('show');
 
@@ -102,6 +103,7 @@
             $('#price').val(data[4]);
         });
 
+        // POSTリクエスト
         $('#addItem').on('submit', function(e) {
             e.preventDefault();
 
@@ -139,7 +141,7 @@
             });
         });
 
-
+        // PUTリクエスト
         $('#editItem').on('submit', function(e) {
             e.preventDefault();
 
@@ -177,6 +179,37 @@
                     console.log(error);
                 }
             });
+        });
+
+        // DELETEリクエスト
+        $('.deletebtn').on('click', function() {
+
+            var deleteConfirm = confirm('削除しますか？');
+
+            if (deleteConfirm == true) {
+
+                var id = $(this).closest('tr').find('#item_id').text();
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    type: "POST",
+                    url: "/item/" + id,
+                    data: {
+                        'id': id,
+                        '_method': 'DELETE'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        alert("Deleted successfully");
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            };
         });
 
     });

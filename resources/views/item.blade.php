@@ -115,7 +115,7 @@
                         <tbody>
                             @foreach($items as $item)
                             <tr>
-                                <td scope="row">{{ $item->id }}</td>
+                                <td scope="row" id="item_id">{{ $item->id }}</td>
                                 <td><p style="width:10em;">{{ $item->title }}</p></td>
                                 <td>
                                     <img src="{{ $item->image }}" alt="" width="100px">
