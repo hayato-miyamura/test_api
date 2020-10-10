@@ -116,16 +116,18 @@
                             @foreach($items as $item)
                             <tr>
                                 <td scope="row" id="item_id">{{ $item->id }}</td>
-                                <td><p style="width:10em;">{{ $item->title }}</p></td>
+                                <td>
+                                    <p style="width:10em;">{{ $item->title }}</p>
+                                </td>
                                 <td>
                                     <img src="{{ $item->image }}" alt="" width="100px">
                                 </td>
-                                <td><p class="description_text" style="width:20em;">{{ $item->description }}</p></td>
+                                <td>
+                                    <p class="description_text" style="width:20em;">{{ $item->description }}</p>
+                                </td>
                                 <td>{{ $item->price }}</td>
                                 <td>
                                     <a href="#" class="btn btn-success editbtn">編集</a>
-                                </td>
-                                <td>
                                     <a href="#" class="btn btn-success deletebtn">削除</a>
                                 </td>
                             </tr>

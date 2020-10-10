@@ -126,17 +126,17 @@
                 type: "POST",
                 url: "/item",
                 data: formData,
-                // cache: false,
                 contentType: false,
                 processData: false,
                 success: function(response) {
                     console.log(response);
                     $('#add_item_modal').modal('hide');
-                    alert("Data stored successfully");
+                    alert("商品データの保存に成功しました");
                     location.reload();
                 },
                 error: function(error) {
                     console.log(error);
+                    alert("商品データの保存に失敗しました");
                 }
             });
         });
@@ -144,7 +144,6 @@
         // PUTリクエスト
         $('#editItem').on('submit', function(e) {
             e.preventDefault();
-
 
             var id = $('#id').val();
             var title = $('#title').val();
@@ -166,17 +165,17 @@
                 type: "POST",
                 url: "/item/" + id,
                 data: formData,
-                // cache: false,
                 contentType: false,
                 processData: false,
                 success: function(response) {
                     console.log(response);
                     $('#edit_item_modal').modal('hide');
-                    alert("Data Updated");
+                    alert("アップデートに成功しました");
                     location.reload();
                 },
                 error: function(error) {
                     console.log(error);
+                    alert("アップデートに失敗しました");
                 }
             });
         });
@@ -184,10 +183,9 @@
         // DELETEリクエスト
         $('.deletebtn').on('click', function() {
 
-            var deleteConfirm = confirm('削除しますか？');
+            var deleteConfirm = confirm('本当に削除しますか？');
 
             if (deleteConfirm == true) {
-
                 var id = $(this).closest('tr').find('#item_id').text();
 
                 $.ajax({
@@ -200,13 +198,15 @@
                         'id': id,
                         '_method': 'DELETE'
                     },
+                    cache: false,
                     success: function(response) {
                         console.log(response);
-                        alert("Deleted successfully");
+                        alert("削除に成功しました");
                         location.reload();
                     },
                     error: function(error) {
                         console.log(error);
+                        alert("削除に失敗しました");
                     }
                 });
             };

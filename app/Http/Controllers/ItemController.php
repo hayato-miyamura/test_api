@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Items;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidatedRequest;
+use App\Policies\ItemPolicy;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -31,10 +32,9 @@ class ItemController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        $items = Items::where('user_id', $user_id)->get();
+        $items = Item::where('user_id', $user_id)->get();
 
         return view('item', compact('items'));
-
     }
 
     /**
@@ -48,7 +48,7 @@ class ItemController extends Controller
         \Log::debug('####');
         \Log::debug($request);
 
-        $item_model = new Items();
+        $item_model = new Item();
         $user = Auth::user();
 
         $item_model->user_id = $user->id;
@@ -72,7 +72,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $item = Items::find($id);
+        $item = Item::find($id);
 
         if ($item) {
             return response()->json([
@@ -93,12 +93,12 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ValidatedRequest $request, $id)
+    public function update(ValidatedRequest $request, $id, User $user)
     {
         \Log::debug('####');
         \Log::debug($request);
 
-        $item_model = new Items();
+        $item_model = new Item();
 
         $uploadImg = $item_model->image = $request->file('image');
         $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
@@ -111,7 +111,12 @@ class ItemController extends Controller
             'price' => $request->input('price'),
         ];
 
-        Items::where('id', $id)->update($update);
+        $item_update = Item::where('id', $id)->update($update);
+
+        // Policies\ItemPolicy.phpで認可を設定
+        if ($user->can('update', $item_update)) {
+            return redirect('/item');
+        }
     }
 
     /**
@@ -120,11 +125,16 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $id, User $user)
     {
         \Log::debug('####');
         \Log::debug($request);
 
-        Items::where('id', $id)->delete();
+        $item_delete = Item::where('id', $id)->delete();
+
+        // Policies\ItemPolicy.phpで認可を設定
+        if ($user->can('delete', $item_delete)) {
+            return redirect('/item');
+        }
     }
 }
