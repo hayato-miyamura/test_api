@@ -24,6 +24,7 @@ class CookieCheck
             Auth::logout();
             return redirect('/login');
         }
-            return $next($request);
+        
+        return $next($request);
     }
 }

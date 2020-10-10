@@ -31,7 +31,7 @@ class HomeController extends Controller
         $user = Auth::user();
 
         $cookie = Cookie::get('name');
-        // Cookieの有効期間(1分)
+        // Cookieの有効期間(3分)
         $minutes = config('const.cookie_limit');
         
         $user_id = $user->id;

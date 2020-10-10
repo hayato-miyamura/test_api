@@ -27,12 +27,14 @@ class ValidatedRequest extends FormRequest
     {
         $canInputTitle = config('const.title');
         $canInputDescription = config('const.description');
+        $MinPrice = config('const.min_price');
+        $MaxPrice = config('const.max_price');
 
         return [
             'title' => "required|string|max:$canInputTitle",
             'image' => 'required|image',
             'description' => "required|string|max:$canInputDescription",
-            'price' => 'required|integer'
+            'price' => "required|integer|between:$MinPrice,$MaxPrice"
         ];
     }
 

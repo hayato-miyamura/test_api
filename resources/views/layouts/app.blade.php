@@ -85,6 +85,17 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
+        // 価格にカンマをいれる
+        $('.item_price').each(function() {
+            $(this).html(addFigure($(this).html()));
+        });
+
+        function addFigure(str) {
+            var num = new String(str).replace(/,/g, "");
+            while (num != (num = num.replace(/^(-?\d+)(\d{3})/, "$1,$2")));
+            return num;
+        }
+
         // 編集モーダルの表示
         $('.editbtn').on('click', function() {
             $('#edit_item_modal').modal('show');
@@ -100,7 +111,7 @@
             $('#id').val(data[0]);
             $('#title').val(data[1]);
             $('#description').val(data[3]);
-            $('#price').val(data[4]);
+            $('#price').val(data[4].replace("円", "").replace(",", ""));
         });
 
         // POSTリクエスト

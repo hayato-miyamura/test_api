@@ -6,7 +6,6 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidatedRequest;
-use App\Policies\ItemPolicy;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -72,18 +71,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $item = Item::find($id);
-
-        if ($item) {
-            return response()->json([
-                'message' => 'OK',
-                'data' => $item
-            ], 200, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-        } else {
-            return response()->json([
-                'message' => 'Not found.',
-            ], 404);
-        }
+        //
     }
 
     /**
