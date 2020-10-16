@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidatedRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class ItemController extends Controller
 {
@@ -44,9 +43,6 @@ class ItemController extends Controller
      */
     public function store(ValidatedRequest $request)
     {
-        \Log::debug('####');
-        \Log::debug($request);
-
         $item_model = new Item();
         $user = Auth::user();
 
@@ -83,9 +79,6 @@ class ItemController extends Controller
      */
     public function update(ValidatedRequest $request, $id, User $user)
     {
-        \Log::debug('####');
-        \Log::debug($request);
-
         $item_model = new Item();
 
         $uploadImg = $item_model->image = $request->file('image');
@@ -115,9 +108,6 @@ class ItemController extends Controller
      */
     public function destroy(Request $request, $id, User $user)
     {
-        \Log::debug('####');
-        \Log::debug($request);
-
         $item_delete = Item::where('id', $id)->delete();
 
         // Policies\ItemPolicy.phpで認可を設定

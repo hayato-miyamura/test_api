@@ -25,16 +25,16 @@ class ValidatedRequest extends FormRequest
      */
     public function rules()
     {
-        $canInputTitle = config('const.title');
-        $canInputDescription = config('const.description');
-        $MinPrice = config('const.min_price');
-        $MaxPrice = config('const.max_price');
+        $can_input_title = config('const.title');
+        $can_input_description = config('const.description');
+        $min_price = config('const.min_price');
+        $max_price = config('const.max_price');
 
         return [
-            'title' => "required|string|max:$canInputTitle",
+            'title' => "required|string|max:$can_input_title",
             'image' => 'required|image',
-            'description' => "required|string|max:$canInputDescription",
-            'price' => "required|integer|between:$MinPrice,$MaxPrice"
+            'description' => "required|string|max:$can_input_description",
+            'price' => "required|integer|between:$min_price,$max_price"
         ];
     }
 

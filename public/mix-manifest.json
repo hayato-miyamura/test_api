@@ -1,4 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/delete.js": "/js/delete.js",
+    "/js/editmodal.js": "/js/editmodal.js",
+    "/js/insertcomma.js": "/js/insertcomma.js",
+    "/js/post.js": "/js/post.js",
+    "/js/put.js": "/js/put.js"
 }

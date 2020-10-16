@@ -139,9 +139,20 @@
                             @endforeach
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- Editのモーダル -->
+<script src="{{ mix('js/editmodal.js') }}"></script>
+<!-- POSTリクエスト -->
+<script src="{{ mix('js/post.js') }}"></script>
+<!-- PUTリクエスト -->
+<script src="{{ mix('js/put.js') }}"></script>
+<!-- DELETEリクエスト -->
+<script src="{{ mix('js/delete.js') }}"></script>
+<!-- 数値に3桁ごとにカンマをいれる -->
+<script src="{{ mix('js/insertcomma.js') }}"></script>
 @endsection
