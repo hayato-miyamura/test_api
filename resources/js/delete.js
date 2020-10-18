@@ -22,11 +22,11 @@ $(function () {
                     data: deleteRequestData,
                 })
                 .then(
-                    function() {
+                    () => {
                         alert("削除に成功しました");
                         location.reload();
                     },
-                    function() {
+                    () => {
                         alert("削除に失敗しました");
                     }
                 );

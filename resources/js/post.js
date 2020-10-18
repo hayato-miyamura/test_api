@@ -31,12 +31,12 @@ $(function () {
                 processData: false,
             })
                 .then(
-                    function () {
+                    () => {
                         $('#edit_item_modal').modal('hide');
                         alert("保存に成功しました");
                         location.reload();
                     },
-                    function () {
+                    () => {
                         alert("保存に失敗しました");
                     }
                 );

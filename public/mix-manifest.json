@@ -1,9 +1,9 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/delete.js": "/js/delete.js",
-    "/js/editmodal.js": "/js/editmodal.js",
-    "/js/insertcomma.js": "/js/insertcomma.js",
-    "/js/post.js": "/js/post.js",
-    "/js/put.js": "/js/put.js"
+    "/js/app.js": "/js/app.js?id=8d94349947eefdc2c696",
+    "/css/app.css": "/css/app.css?id=79debca8a9992f09213c",
+    "/js/delete.js": "/js/delete.js?id=5ee1f8f16e7b80fb4e31",
+    "/js/editmodal.js": "/js/editmodal.js?id=e5f9daef6a3f22ee0cef",
+    "/js/insertcomma.js": "/js/insertcomma.js?id=cb8c884a8bdfc4fb0439",
+    "/js/post.js": "/js/post.js?id=157dd156db31db162317",
+    "/js/put.js": "/js/put.js?id=be9116f0c5dd8b5cc585"
 }

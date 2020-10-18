@@ -33,12 +33,12 @@ $(function () {
                 processData: false,
             })
                 .then(
-                    function () {
+                    () => {
                         $('#edit_item_modal').modal('hide');
                         alert("アップデートに成功しました");
                         location.reload();
                     },
-                    function () {
+                    () => {
                         alert("アップデートに失敗しました");
                     }
                 );
