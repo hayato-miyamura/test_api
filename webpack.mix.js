@@ -12,4 +12,11 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .js('resources/js/editmodal.js', 'public/js')
+    .js('resources/js/post.js', 'public/js')
+    .js('resources/js/put.js', 'public/js')
+    .js('resources/js/delete.js', 'public/js')
+    .js('resources/js/insertcomma.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css')
+    // ↓キャッシュバスティング
+    .version();
