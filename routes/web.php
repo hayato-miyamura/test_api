@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('login/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('login/google/callback', 'Auth\LoginController@googleCallback');
+
+Route::get('/item', 'ItemController@index')->name('item.index');
+Route::post('/item', 'ItemController@store')->name('item.store');
+Route::put('/item/{id}', 'ItemController@update')->name('item.update');
+Route::delete('/item/{id}', 'ItemController@destroy')->name('item.destroy');
