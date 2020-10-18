@@ -26,22 +26,22 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="InputTitle">商品タイトル</label>
-                                            <input type="text" class="form-control" name="title" id="add_title" placeholder="商品名を入力してください">
+                                            <input type="text" class="form-control" name="title" id="add_title" placeholder="商品名を入力してください" required>
                                             <small id="" class="form-text text-muted">※最大100文字</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="InputFile">商品画像</label>
-                                            <input type="file" name="image" class="form-control-file" id="add_image">
+                                            <input type="file" name="image" class="form-control-file" id="add_image" required>
                                             <small id="" class="form-text text-muted">※画像を必ず選択して下さい</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="InputDescription">商品の説明</label>
-                                            <textarea name="description" class="form-control" rows="3" id="add_description"></textarea>
+                                            <textarea name="description" class="form-control" rows="3" id="add_description" required></textarea>
                                             <small id="" class="form-text text-muted">※最大500文字</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="InputPrice">価格</label>
-                                            <input type="text" class="form-control" name="price" id="add_price" placeholder="価格を入力してください">
+                                            <input type="text" class="form-control" name="price" id="add_price" placeholder="価格を入力してください" required>
                                             <small id="" class="form-text text-muted">※カンマなしで入力。最大9,999,999円まで設定可能。</small>
                                         </div>
                                         <div class="">
@@ -75,23 +75,23 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="EditTitle">商品タイトル</label>
-                                            <input type="text" class="form-control" name="title" id="title" placeholder="商品名を入力してください">
+                                            <input type="text" class="form-control" name="title" id="title" placeholder="商品名を入力してください" required>
                                             <small id="" class="form-text text-muted">※最大100文字</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="EditFile">商品画像</label>
-                                            <input type="file" name="image" class="form-control-file" id="image" multiple>
+                                            <input type="file" name="image" class="form-control-file" id="image" multiple required>
                                             <small id="" class="form-text text-muted">※画像を必ず選択して下さい</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="EditDescription">商品の説明</label>
-                                            <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+                                            <textarea name="description" class="form-control" id="description" rows="3" required></textarea>
                                             <small id="" class="form-text text-muted">※最大500文字</small>
                                             
                                         </div>
                                         <div class="form-group">
                                             <label for="EditPrice">価格</label>
-                                            <input type="text" class="form-control" name="price" id="price" placeholder="価格を入力してください">
+                                            <input type="text" class="form-control" name="price" id="price" placeholder="価格を入力してください" required>
                                             <small id="" class="form-text text-muted">※カンマなしで入力。最大9,999,999円まで設定可能。</small>
                                         </div>
                                         <div class="">
@@ -139,7 +139,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                 </div>
             </div>
         </div>

@@ -100,34 +100,29 @@ $(function () {
     var $image = $('#add_image').val();
     var $description = $('#add_description').val();
     var $price = $('#add_price').val();
-
-    if ($.isEmptyObject($title) || $.isEmptyObject($image) || $.isEmptyObject($description) || $.isEmptyObject($price)) {
-      alert('未入力の項目があります');
-    } else {
-      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-      var postRequestUrl = "/item";
-      var formData = new FormData($('#addItem').get(0));
-      formData.append('title', $title);
-      formData.append('image', $image);
-      formData.append('description', $description);
-      formData.append('price', $price);
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': CSRF_TOKEN
-        },
-        type: "POST",
-        url: postRequestUrl,
-        data: formData,
-        contentType: false,
-        processData: false
-      }).then(function () {
-        $('#edit_item_modal').modal('hide');
-        alert("保存に成功しました");
-        location.reload();
-      }, function () {
-        alert("保存に失敗しました");
-      });
-    }
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    var postRequestUrl = "/item";
+    var formData = new FormData($('#addItem').get(0));
+    formData.append('title', $title);
+    formData.append('image', $image);
+    formData.append('description', $description);
+    formData.append('price', $price);
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': CSRF_TOKEN
+      },
+      type: "POST",
+      url: postRequestUrl,
+      data: formData,
+      contentType: false,
+      processData: false
+    }).then(function () {
+      $('#edit_item_modal').modal('hide');
+      alert("保存に成功しました");
+      location.reload();
+    }, function () {
+      alert("保存に失敗しました");
+    });
   });
 });
 
