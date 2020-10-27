@@ -20,6 +20,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col"></th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,7 +29,10 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                <a class="btn btn-primary" href="{{ route('item.index') }}" role="button">商品登録ページへ</a>
+                                    <a class="btn btn-primary" href="{{ route('item.index') }}">商品一覧へ</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" href="{{ route('item.show') }}" role="button">商品管理ページへ</a>
                                 </td>
                             </tr>
                         </tbody>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidatedRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -27,12 +28,9 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $user_id = $user->id;
+        $all_items = Item::paginate(10);
 
-        $items = Item::where('user_id', $user_id)->get();
-
-        return view('item', compact('items'));
+        return view('welcome', compact('all_items'));
     }
 
     /**
@@ -47,6 +45,7 @@ class ItemController extends Controller
         $user = Auth::user();
 
         $item_model->user_id = $user->id;
+        $item_model->user_name = $user->name;
         $item_model->title = $request->input('title');
         $item_model->image = $request->input('image');
         $item_model->description = $request->input('description');
@@ -65,9 +64,14 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $items = Item::where('user_id', $user_id)->get();
+
+        return view('item', compact('items'));
     }
 
     /**
