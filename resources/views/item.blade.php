@@ -79,15 +79,10 @@
                                             <small id="" class="form-text text-muted">※最大100文字</small>
                                         </div>
                                         <div class="form-group">
-                                            <label for="EditFile">商品画像</label>
-                                            <input type="file" name="image" class="form-control-file" id="image" multiple required>
-                                            <small id="" class="form-text text-muted">※画像を必ず選択して下さい</small>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="EditDescription">商品の説明</label>
                                             <textarea name="description" class="form-control" id="description" rows="3" required></textarea>
                                             <small id="" class="form-text text-muted">※最大500文字</small>
-                                            
+
                                         </div>
                                         <div class="form-group">
                                             <label for="EditPrice">価格</label>
@@ -105,12 +100,46 @@
                     </div>
                     <!-- End of the "Edit" modal -->
 
+                    <!-- Start of the "ImageEdit" modal -->
+                    <div class="modal fade" id="edit_image_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="EditModalCenterTitle">商品画像の変更</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editImage" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div>
+                                            <label for="">商品ID</label>
+                                            <input type="text" id="item_id" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="EditFile">新しい商品画像</label>
+                                            <input type="file" name="image" class="form-control-file" id="new_image" multiple required>
+                                            <small id="" class="form-text text-muted">※画像を必ず選択して下さい</small>
+                                        </div>
+                                        <div class="">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                                            <input type="submit" class="btn btn-primary" value="更新する">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of the "ImageEdit" modal-->
+
                     <table class="table">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">タイトル</th>
                                 <th scope="col">画像</th>
+                                <th scope="col">タイトル</th>
                                 <th scope="col">詳細</th>
                                 <th scope="col">価格</th>
                                 <th scope="col"></th>
@@ -122,10 +151,10 @@
                             <tr>
                                 <td scope="row" id="item_id">{{ $item->id }}</td>
                                 <td>
-                                    <p style="width:10em;">{{ $item->title }}</p>
+                                    <img class="item_image" src="{{ $item->image }}" alt="" width="100px">
                                 </td>
                                 <td>
-                                    <img src="{{ $item->image }}" alt="" width="100px">
+                                    <p style="width:10em;">{{ $item->title }}</p>
                                 </td>
                                 <td>
                                     <p class="description_text" style="width:20em;">{{ $item->description }}</p>
@@ -145,14 +174,23 @@
         </div>
     </div>
 </div>
+<div class="row justify-content-center">
+    {{ $items->links() }}
+</div>
 <!-- Editのモーダル -->
 <script src="{{ mix('js/editmodal.js') }}"></script>
+<!-- 画像変更のモーダル -->
+<script src="{{ mix('js/editimagemodal.js') }}"></script>
 <!-- POSTリクエスト -->
 <script src="{{ mix('js/post.js') }}"></script>
 <!-- PUTリクエスト -->
 <script src="{{ mix('js/put.js') }}"></script>
+<!-- 画像のPUTリクエスト -->
+<script src="{{ mix('js/putimage.js') }}"></script>
 <!-- DELETEリクエスト -->
 <script src="{{ mix('js/delete.js') }}"></script>
 <!-- 数値に3桁ごとにカンマをいれる -->
 <script src="{{ mix('js/insertcomma.js') }}"></script>
+<!-- 画像にカーソルが乗ったら透明度を変更 -->
+<script src="{{ mix('js/imageopacity.js') }}"></script>
 @endsection

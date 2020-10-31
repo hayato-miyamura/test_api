@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -98,14 +98,12 @@ $(function () {
     e.preventDefault();
     var $id = $('#id').val();
     var $title = $('#title').val();
-    var $image = $('#image').val();
     var $description = $('#description').val();
     var $price = $('#price').val();
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     var putRequestUrl = "/item/" + $id;
     var formData = new FormData($('#editItem').get(0));
     formData.append('title', $title);
-    formData.append('image', $image);
     formData.append('description', $description);
     formData.append('price', $price);
     $.ajax({
@@ -130,7 +128,7 @@ $(function () {
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!***********************************!*\
   !*** multi ./resources/js/put.js ***!
   \***********************************/

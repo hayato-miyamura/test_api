@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">{{ __('投稿された商品一覧') }}</div>
                 <div class="card-body">
                     <table class="table">
                         <thead class="thead-light">

@@ -81,59 +81,36 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/delete.js":
-/*!********************************!*\
-  !*** ./resources/js/delete.js ***!
-  \********************************/
+/***/ "./resources/js/imageopacity.js":
+/*!**************************************!*\
+  !*** ./resources/js/imageopacity.js ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
-  $('.deletebtn').on('click', function () {
-    var deleteConfirm = confirm('本当に削除しますか？');
-
-    if (deleteConfirm) {
-      var $id = $(this).closest('tr').find('#item_id').text();
-      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-      var deleteRequestUrl = "/item/" + $id;
-      var deleteRequestData = {
-        'id': $id,
-        '_method': 'DELETE'
-      };
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': CSRF_TOKEN
-        },
-        type: "POST",
-        url: deleteRequestUrl,
-        data: deleteRequestData
-      }).then(function () {
-        alert("削除に成功しました");
-        location.reload();
-      }, function () {
-        alert("削除に失敗しました");
-      });
-    }
-
-    ;
+  $('.item_image').hover(function () {
+    $(this).fadeTo("500", 0.5);
+  }, function () {
+    $(this).fadeTo("500", 1.0);
   });
 });
 
 /***/ }),
 
-/***/ 6:
-/*!**************************************!*\
-  !*** multi ./resources/js/delete.js ***!
-  \**************************************/
+/***/ 8:
+/*!********************************************!*\
+  !*** multi ./resources/js/imageopacity.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/test_api/resources/js/delete.js */"./resources/js/delete.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/test_api/resources/js/imageopacity.js */"./resources/js/imageopacity.js");
 
 
 /***/ })
