@@ -1,20 +1,16 @@
 $(function () {
-    $('#editItem').on('submit', function (e) {
+    $('#editImage').on('submit', function (e) {
         e.preventDefault();
 
-        const $id = $('#id').val();
-        const $title = $('#title').val();
-        const $description = $('#description').val();
-        const $price = $('#price').val();
+        const $id = $('#item_id').val();
+        const $image = $('#new_image').val();
 
         const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         const putRequestUrl = "/item/" + $id;
 
-        const formData = new FormData($('#editItem').get(0));
-
-        formData.append('title', $title);
-        formData.append('description', $description);
-        formData.append('price', $price);
+        const formData = new FormData($('#editImage').get(0));
+        
+        formData.append('image', $image);
 
         $.ajax({
             headers: {
@@ -30,11 +26,11 @@ $(function () {
             .then(
                 () => {
                     $('#edit_item_modal').modal('hide');
-                    alert("アップデートに成功しました");
+                    alert("画像のアップデートに成功しました");
                     location.reload();
                 },
                 () => {
-                    alert("アップデートに失敗しました");
+                    alert("画像のアップデートに失敗しました");
                 }
             );
     });

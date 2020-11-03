@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidatedRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
-
     // Middleware/CheckAuthenticated.phpで認証済みかどうかチェック。
     // Middleware/CookieCheck.phpでCookieを持ってない場合Login画面へリダイレクト。
     public function __construct()
@@ -27,12 +27,9 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $user_id = $user->id;
+        $all_items = Item::latest('created_at')->paginate(10);
 
-        $items = Item::where('user_id', $user_id)->get();
-
-        return view('item', compact('items'));
+        return view('welcome', compact('all_items'));
     }
 
     /**
@@ -47,6 +44,7 @@ class ItemController extends Controller
         $user = Auth::user();
 
         $item_model->user_id = $user->id;
+        $item_model->user_name = $user->name;
         $item_model->title = $request->input('title');
         $item_model->image = $request->input('image');
         $item_model->description = $request->input('description');
@@ -65,9 +63,14 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $items = Item::where('user_id', $user_id)->latest()->paginate(5);
+
+        return view('item', compact('items'));
     }
 
     /**
@@ -77,27 +80,64 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ValidatedRequest $request, $id, User $user)
+    public function update(Request $request, $id, User $user)
     {
         $item_model = new Item();
 
-        $uploadImg = $item_model->image = $request->file('image');
-        $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
-        $item_model->image = Storage::disk(config('filesystems.cloud'))->url($path);
+        $image_request = $request->file('image');
+        $title_request = $request->input('title');
+        $description_request = $request->input('description');
+        $price_request = $request->input('price');
 
-        $update = [
-            'title' => $request->input('title'),
-            'image' => $item_model->image,
-            'description' => $request->input('description'),
-            'price' => $request->input('price'),
-        ];
+        $can_input_title = config('const.title');
+        $can_input_description = config('const.description');
+        $min_price = config('const.min_price');
+        $max_price = config('const.max_price');
 
-        $item_update = Item::where('id', $id)->update($update);
+        if ($image_request) {
 
-        // Policies\ItemPolicy.phpで認可を設定
-        if ($user->can('update', $item_update)) {
-            return redirect('/item');
+            $request->validate([
+                'image' => 'required|image'
+            ]);
+
+            $uploadImg = $item_model->image = $image_request;
+            $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
+            $item_model->image = Storage::disk(config('filesystems.cloud'))->url($path);
+
+            $image_update_array = [
+                'image' => $item_model->image
+            ];
+
+            $image_update = Item::where('id', $id)->update($image_update_array);
+
+            // Policies\ItemPolicy.phpで認可を設定
+            if ($user->can('update', $image_update)) {
+                return redirect('/item');
+            }
+
+        } else {
+
+            $request->validate([
+                'title' => "required|string|max:$can_input_title",
+                'description' => "required|string|max:$can_input_description",
+                'price' => "required|integer|between:$min_price,$max_price"
+            ]);
+
+            $update_array = [
+                'title' => $title_request,
+                'description' => $description_request,
+                'price' => $price_request,
+            ];
+
+            $item_info_update = Item::where('id', $id)->update($update_array);
+
+            // Policies\ItemPolicy.phpで認可を設定
+            if ($user->can('update', $item_info_update)) {
+                return redirect('/item');
+            }
+
         }
+
     }
 
     /**

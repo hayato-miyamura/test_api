@@ -1,9 +1,12 @@
 {
     "/js/app.js": "/js/app.js?id=8d94349947eefdc2c696",
     "/css/app.css": "/css/app.css?id=79debca8a9992f09213c",
-    "/js/delete.js": "/js/delete.js?id=5ee1f8f16e7b80fb4e31",
+    "/js/delete.js": "/js/delete.js?id=ef311322be96bf8bccc8",
+    "/js/editimagemodal.js": "/js/editimagemodal.js?id=8015a8d5bd0cefea37e2",
     "/js/editmodal.js": "/js/editmodal.js?id=e5f9daef6a3f22ee0cef",
-    "/js/insertcomma.js": "/js/insertcomma.js?id=cb8c884a8bdfc4fb0439",
-    "/js/post.js": "/js/post.js?id=e315fdc8145ce28e28d4",
-    "/js/put.js": "/js/put.js?id=7cddfefbdd2bb8ed4847"
+    "/js/imageopacity.js": "/js/imageopacity.js?id=b2528103b7b332d17b6f",
+    "/js/insertcomma.js": "/js/insertcomma.js?id=f4ac3c2505d4502cfa54",
+    "/js/post.js": "/js/post.js?id=b3152516b04236e49377",
+    "/js/put.js": "/js/put.js?id=7976ae08f6226a1f5187",
+    "/js/putimage.js": "/js/putimage.js?id=a45ffab160fdc7a11cf4"
 }

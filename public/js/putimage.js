@@ -81,59 +81,57 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/delete.js":
-/*!********************************!*\
-  !*** ./resources/js/delete.js ***!
-  \********************************/
+/***/ "./resources/js/putimage.js":
+/*!**********************************!*\
+  !*** ./resources/js/putimage.js ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
-  $('.deletebtn').on('click', function () {
-    var deleteConfirm = confirm('本当に削除しますか？');
-
-    if (deleteConfirm) {
-      var $id = $(this).closest('tr').find('#item_id').text();
-      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-      var deleteRequestUrl = "/item/" + $id;
-      var deleteRequestData = {
-        'id': $id,
-        '_method': 'DELETE'
-      };
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': CSRF_TOKEN
-        },
-        type: "POST",
-        url: deleteRequestUrl,
-        data: deleteRequestData
-      }).then(function () {
-        alert("削除に成功しました");
-        location.reload();
-      }, function () {
-        alert("削除に失敗しました");
-      });
-    }
-
-    ;
+  $('#editImage').on('submit', function (e) {
+    e.preventDefault();
+    var $id = $('#item_id').val();
+    var $image = $('#new_image').val();
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    var putRequestUrl = "/item/" + $id;
+    var formData = new FormData($('#editImage').get(0));
+    formData.append('image', $image);
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': CSRF_TOKEN
+      },
+      type: "POST",
+      url: putRequestUrl,
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false
+    }).then(function () {
+      $('#edit_item_modal').modal('hide');
+      alert("画像のアップデートに成功しました");
+      location.reload();
+    }, function () {
+      alert("画像のアップデートに失敗しました");
+    });
   });
 });
 
 /***/ }),
 
-/***/ 6:
-/*!**************************************!*\
-  !*** multi ./resources/js/delete.js ***!
-  \**************************************/
+/***/ 5:
+/*!****************************************!*\
+  !*** multi ./resources/js/putimage.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/test_api/resources/js/delete.js */"./resources/js/delete.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/test_api/resources/js/putimage.js */"./resources/js/putimage.js");
 
 
 /***/ })
