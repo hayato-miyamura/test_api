@@ -101,7 +101,7 @@ $(function () {
       return $(this).text();
     }).get();
     $('#id').val($data[0]);
-    $('#title').val($data[1]);
+    $('#title').val($data[2]);
     $('#description').val($data[3]);
     $('#price').val($data[4].replace("円", "").replace(/,/g, ""));
   });
