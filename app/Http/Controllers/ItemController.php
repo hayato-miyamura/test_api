@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidatedRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
